@@ -1,0 +1,304 @@
+/* Importa as fontes do Google Fonts usadas na aplicação */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Reset global: remove margin e padding padrão de todos os elementos
+   e usa box-sizing: border-box para que padding não aumente o tamanho dos elementos */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* Variáveis de cores e estilos para o TEMA ESCURO */
+:root[data-theme="dark"]{
+  --bg:#0d0d14;         /* Cor de fundo principal (quase preto) */
+  --bg2:#111118;        /* Cor de fundo secundária */
+  --surface:#14141e;    /* Cor de superfícies como cards e sidebar */
+  --surface2:#1c1c28;   /* Cor de superfícies mais escuras */
+  --border:#22223a;     /* Cor das bordas */
+  --border2:#2e2e48;    /* Cor das bordas mais claras */
+  --accent:#7c6af7;     /* Cor de destaque (roxo) */
+  --accent-glow:rgba(124,106,247,.18); /* Brilho suave da cor de destaque */
+  --accent-dim:#5e4fd4; /* Versão mais escura da cor de destaque */
+  --green:#34d399;      /* Cor verde para estados de sucesso */
+  --green-glow:rgba(52,211,153,.12);
+  --red:#f87171;        /* Cor vermelha para estados de erro */
+  --red-glow:rgba(248,113,113,.12);
+  --text:#e8e8f2;       /* Cor do texto principal */
+  --text2:#a0a0be;      /* Cor do texto secundário */
+  --muted:#5a5a7a;      /* Cor do texto desabilitado/sutil */
+  --shadow:0 8px 32px rgba(0,0,0,.5); /* Sombra dos elementos */
+  --radius:14px;        /* Raio de borda padrão */
+}
+
+/* Variáveis de cores e estilos para o TEMA CLARO */
+:root[data-theme="light"]{
+  --bg:#f2f2f8;
+  --bg2:#eaeaf4;
+  --surface:#ffffff;
+  --surface2:#f6f6fc;
+  --border:#e0e0ee;
+  --border2:#d0d0e4;
+  --accent:#6554e8;
+  --accent-glow:rgba(101,84,232,.12);
+  --accent-dim:#4e3fd0;
+  --green:#059669;
+  --green-glow:rgba(5,150,105,.1);
+  --red:#dc2626;
+  --red-glow:rgba(220,38,38,.1);
+  --text:#141420;
+  --text2:#404060;
+  --muted:#8080a0;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+  --radius:14px;
+}
+
+/* Estilo base do body: fonte, fundo, cor do texto e altura mínima de 100% da tela */
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s}
+
+/* HEADER: barra fixa no topo com logo e botão de tema */
+header{height:60px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+
+/* Container do logo: alinha ícone e texto horizontalmente */
+.logo{display:flex;align-items:center;gap:10px}
+
+/* Texto do logo com a fonte Syne em negrito */
+.logo-text{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;letter-spacing:-.02em}
+
+/* "CV" aparece na cor de destaque e "Builder" na cor normal do texto */
+.logo-text .cv{color:var(--accent)}.logo-text .builder{color:var(--text)}
+
+/* Botão de trocar tema: quadrado arredondado com bordas */
+.theme-btn{width:38px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;font-size:.95rem;transition:all .2s}
+
+/* Ao passar o mouse no botão de tema, a borda fica na cor de destaque */
+.theme-btn:hover{border-color:var(--accent)}
+
+/* LAYOUT: divide a tela em duas colunas (sidebar de 400px + área principal) */
+.app-layout{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 60px)}
+
+/* SIDEBAR: coluna lateral com o formulário, fica grudada no topo ao rolar */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:24px;overflow-y:auto;position:sticky;top:60px;height:calc(100vh - 60px)}
+
+/* NAV DE SEÇÕES: barra de botões que navega entre as seções do formulário */
+.section-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+
+/* Botão de navegação padrão: transparente e texto sutil */
+.snav-btn{padding:5px 10px;border-radius:7px;border:none;background:transparent;color:var(--muted);font-size:.75rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+
+/* Ao passar o mouse no botão de nav, fica levemente destacado */
+.snav-btn:hover{color:var(--text2);background:var(--surface2)}
+
+/* Botão ativo da nav: fundo com brilho e texto na cor de destaque */
+.snav-btn.active{background:var(--accent-glow);color:var(--accent)}
+
+/* SEÇÕES DO FORMULÁRIO: por padrão ficam escondidas */
+.form-section{display:none}
+
+/* A seção com a classe "active" é exibida */
+.form-section.active{display:block}
+
+/* Cabeçalho de cada seção com número grande e título */
+.section-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+
+/* Número da seção em roxo e semi-transparente */
+.section-num{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);opacity:.4;line-height:1}
+
+/* Título da seção em negrito */
+.section-title{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:2px}
+
+/* Subtítulo da seção em texto sutil */
+.section-sub{font-size:.76rem;color:var(--muted)}
+
+/* Grupo de formulário com espaçamento inferior */
+.form-group{margin-bottom:14px}
+
+/* Linha com dois campos lado a lado usando grid */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* Labels dos campos: letras maiúsculas e em negrito */
+label{display:block;font-size:.76rem;font-weight:600;color:var(--text2);margin-bottom:5px;letter-spacing:.02em;text-transform:uppercase}
+
+/* Dica ao lado do label (como "separadas por vírgula") em texto menor e sutil */
+.label-hint{font-size:.68rem;font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0}
+
+/* Estilo base para inputs, selects e textareas */
+input,select,textarea{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:9px 13px;color:var(--text);font-size:.85rem;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;resize:vertical}
+
+/* Ao focar em um campo, a borda fica roxa e aparece um brilho ao redor */
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+
+/* Textarea tem altura mínima para o usuário digitar confortavelmente */
+textarea{min-height:80px}
+
+/* Fundo das opções do select combina com o tema */
+select option{background:var(--surface)}
+
+/* ITENS DINÂMICOS: cards de experiência, formação, idioma e projeto */
+.dyn-item{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:12px;position:relative;animation:fadeIn .2s ease}
+
+/* Animação de entrada dos cards: aparecem suavemente de cima para baixo */
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1}}
+
+/* Cabeçalho do card dinâmico com título e botão de remover */
+.dyn-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+
+/* Título do card em letras maiúsculas e na cor de destaque */
+.dyn-item-title{font-size:.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+
+/* Botão de remover item: pequeno e transparente por padrão */
+.btn-remove{width:26px;height:26px;border-radius:6px;border:1px solid transparent;background:none;color:var(--muted);cursor:pointer;font-size:.75rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+
+/* Ao passar o mouse no botão de remover, fica vermelho */
+.btn-remove:hover{border-color:var(--red);color:var(--red);background:var(--red-glow)}
+
+/* BOTÕES */
+
+/* Botão de adicionar item: largura total com borda tracejada */
+.btn-add-item{width:100%;padding:9px;border:1.5px dashed var(--border2);border-radius:9px;background:transparent;color:var(--muted);font-size:.83rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;margin-bottom:20px}
+
+/* Ao passar o mouse, a borda e o texto ficam roxos */
+.btn-add-item:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Container dos botões de navegação (voltar/próximo): alinhados à direita */
+.nav-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+
+/* Botão "Voltar": estilo secundário com borda */
+.btn-back{padding:9px 18px;border:1px solid var(--border);border-radius:9px;background:transparent;color:var(--muted);font-size:.83rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+
+/* Ao passar o mouse no botão voltar, o texto e a borda ficam mais visíveis */
+.btn-back:hover{color:var(--text);border-color:var(--border2)}
+
+/* Botão "Próximo": estilo primário com fundo roxo */
+.btn-next{padding:9px 20px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-size:.83rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+
+/* Ao passar o mouse, escurece levemente e adiciona sombra brilhante */
+.btn-next:hover{background:var(--accent-dim);box-shadow:0 4px 16px var(--accent-glow)}
+
+/* Botão "Gerar currículo": maior e com sombra brilhante */
+.btn-generate{padding:10px 24px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-size:.88rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;box-shadow:0 4px 20px var(--accent-glow)}
+
+/* Ao passar o mouse, sobe levemente (efeito de hover com transform) */
+.btn-generate:hover{background:var(--accent-dim);transform:translateY(-1px)}
+
+/* CARDS DE TEMPLATE */
+
+/* Grade de 3 colunas para os cards de template */
+.template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* Card de template: borda, fundo e transição suave */
+.template-card{cursor:pointer;border-radius:11px;border:2px solid var(--border);background:var(--surface2);padding:10px;text-align:center;transition:all .2s;display:block}
+
+/* Esconde o radio button real, o clique no card já o controla */
+.template-card input[type=radio]{display:none}
+
+/* Card selecionado: borda roxa e fundo com brilho suave */
+.template-card:has(input:checked){border-color:var(--accent);background:var(--accent-glow)}
+
+/* Ao passar o mouse no card, a borda fica levemente mais visível */
+.template-card:hover{border-color:var(--border2)}
+
+/* Preview do template: mini-representação visual do layout */
+.tpl-preview{height:80px;border-radius:7px;overflow:hidden;margin-bottom:8px;display:flex;background:#f0f0f0}
+
+/* Sidebar do preview do template Moderno (roxa) */
+.tpl-sidebar{width:30%;background:linear-gradient(160deg,#7c6af7,#5e4fd4)}
+
+/* Corpo do preview com barrinhas simulando texto */
+.tpl-body{flex:1;padding:8px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+
+/* Barrinhas genéricas para simular texto */
+.tpl-bar{height:3px;border-radius:2px;background:#ddd}
+
+/* Variações de tamanho das barrinhas: largo, médio e pequeno */
+.tpl-bar-l{width:75%}.tpl-bar-m{width:55%}.tpl-bar-s{width:35%}
+
+/* Preview do template Minimalista: fundo branco, layout em coluna */
+.tpl-minimalista{background:#fff;flex-direction:column;padding:8px}
+.tpl-min-header{padding-bottom:4px}
+
+/* Preview do template Criativo: layout em coluna com header */
+.tpl-criativo{flex-direction:column}
+
+/* Header do template Criativo com gradiente roxo/rosa */
+.tpl-cr-header{height:28px;background:linear-gradient(135deg,#7c6af7,#f472b6)}
+
+/* Badges colorido no preview do template Criativo */
+.tpl-badge{width:20px;height:6px;border-radius:3px;background:#7c6af7;margin-top:4px}
+
+/* Nome do template em negrito */
+.tpl-name{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:2px}
+
+/* Descrição do template em texto sutil */
+.tpl-desc{font-size:.68rem;color:var(--muted)}
+
+/* ÁREA PRINCIPAL: exibe o currículo gerado ou a tela de boas-vindas */
+.main-area{background:var(--bg2);display:flex;align-items:flex-start;justify-content:center;padding:32px 24px;min-height:calc(100vh - 60px)}
+
+/* TELA DE BOAS-VINDAS: centralizada e com largura máxima */
+.welcome-screen{text-align:center;max-width:420px;margin:auto;padding-top:60px}
+
+/* Emoji grande de documento no topo da tela de boas-vindas */
+.welcome-icon{font-size:3rem;margin-bottom:18px}
+
+/* Título da tela de boas-vindas em negrito */
+.welcome-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:10px;color:var(--text)}
+
+/* Subtítulo da tela de boas-vindas */
+.welcome-sub{font-size:.86rem;color:var(--text2);line-height:1.7;margin-bottom:28px}
+
+/* Linha com os três passos de uso (preencher, escolher, exportar) */
+.welcome-steps{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+
+/* Cada passo individual */
+.step{display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--text2);font-weight:500}
+
+/* Número do passo em círculo roxo preenchido */
+.step-n{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0}
+
+/* Seta entre os passos */
+.step-arrow{color:var(--muted);font-size:.9rem}
+
+/* ÁREA DE PREVIEW DO CURRÍCULO */
+.cv-preview-wrap{width:100%;max-width:800px}
+
+/* Botões de ação (exportar PDF e editar) alinhados à direita */
+.preview-actions{display:flex;gap:10px;justify-content:flex-end;margin-bottom:16px}
+
+/* Botão de exportar PDF: roxo preenchido */
+.btn-pdf{padding:9px 20px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-size:.83rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-pdf:hover{background:var(--accent-dim)}
+
+/* Botão de editar: estilo secundário com borda */
+.btn-edit{padding:9px 18px;border:1px solid var(--border2);border-radius:9px;background:var(--surface);color:var(--text2);font-size:.83rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-edit:hover{color:var(--text);border-color:var(--accent)}
+
+/* Container do currículo: fundo branco, bordas arredondadas e sombra */
+.cv-scale-wrap{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+
+/* Área onde o HTML do currículo gerado é inserido */
+#cvOutput{width:100%;min-height:600px}
+
+/* TOAST: notificação flutuante que aparece no canto inferior direito */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:10px 18px;font-size:.83rem;font-weight:500;color:var(--text);box-shadow:var(--shadow);transform:translateY(60px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);z-index:999}
+
+/* Quando a classe "show" é adicionada, o toast aparece com animação elástica */
+.toast.show{transform:translateY(0);opacity:1}
+
+/* IMPRESSÃO: esconde tudo menos o currículo na hora de imprimir/exportar PDF */
+@media print{
+  /* Torna todos os elementos invisíveis */
+  body *{visibility:hidden}
+  /* Exceto o currículo gerado e seus filhos */
+  #cvOutput,#cvOutput *{visibility:visible}
+  /* Posiciona o currículo para ocupar a página inteira */
+  #cvOutput{position:fixed;left:0;top:0;width:100%;height:100%}
+}
+
+/* RESPONSIVO: em telas menores que 900px, empilha sidebar e área principal */
+@media(max-width:900px){
+  /* Muda para uma coluna só */
+  .app-layout{grid-template-columns:1fr}
+  /* A sidebar deixa de ser sticky e volta ao fluxo normal */
+  .sidebar{position:static;height:auto}
+  /* Reduz o padding da área principal */
+  .main-area{padding:20px 16px}
+  /* Mantém os 3 cards de template lado a lado mesmo em tela menor */
+  .template-grid{grid-template-columns:repeat(3,1fr)}
+}

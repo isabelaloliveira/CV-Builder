@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Builder</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=DM+Serif+Display&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- Cabeçalho fixo no topo com o logo e o botão de trocar tema -->
+<header>
+  <!-- Container do logo (ícone SVG + texto) -->
+  <div class="logo">
+    <!-- Ícone do logo em SVG desenhado manualmente -->
+    <div class="logo-mark">
+      <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+        <!-- Fundo arredondado do ícone usando a cor de destaque -->
+        <rect width="32" height="32" rx="9" fill="var(--accent)" fill-opacity=".15"/>
+        <!-- Linha grossa representando o título do currículo -->
+        <rect x="9" y="8" width="14" height="2" rx="1" fill="var(--accent)"/>
+        <!-- Linhas menores representando o texto do currículo -->
+        <rect x="9" y="13" width="10" height="1.5" rx=".75" fill="var(--text2)"/>
+        <rect x="9" y="16.5" width="12" height="1.5" rx=".75" fill="var(--text2)"/>
+        <rect x="9" y="20" width="8" height="1.5" rx=".75" fill="var(--text2)"/>
+        <!-- Círculo com checkmark representando aprovação/conclusão -->
+        <circle cx="23" cy="22" r="4" fill="var(--accent)" fill-opacity=".9"/>
+        <path d="M21.5 22l1 1 2-2" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <!-- Texto do logo: "CV" em roxo e "Builder" na cor padrão -->
+    <div class="logo-text"><span class="cv">CV</span><span class="builder">Builder</span></div>
+  </div>
+  <!-- Botão que troca entre tema claro e escuro ao clicar -->
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+</header>
+
+<!-- Layout principal da aplicação: sidebar (formulário) + área de preview -->
+<div class="app-layout">
+
+  <!-- Coluna lateral esquerda com o formulário dividido em seções -->
+  <aside class="sidebar">
+    <!-- Barra de navegação entre as seções do formulário -->
+    <nav class="section-nav">
+      <!-- Cada botão leva para uma seção diferente do formulário -->
+      <button class="snav-btn active" onclick="goSection(0)">Dados</button>
+      <button class="snav-btn" onclick="goSection(1)">Experiência</button>
+      <button class="snav-btn" onclick="goSection(2)">Formação</button>
+      <button class="snav-btn" onclick="goSection(3)">Skills</button>
+      <button class="snav-btn" onclick="goSection(4)">Idiomas</button>
+      <button class="snav-btn" onclick="goSection(5)">Projetos</button>
+      <button class="snav-btn" onclick="goSection(6)">Template</button>
+    </nav>
+
+    <!-- SEÇÃO 0: DADOS PESSOAIS -->
+    <!-- Começa com a classe "active" porque é a primeira seção exibida -->
+    <div class="form-section active" id="sec-0">
+      <!-- Cabeçalho da seção com número e título -->
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <div class="section-title">Dados pessoais</div>
+          <div class="section-sub">Suas informações de contato</div>
+        </div>
+      </div>
+      <!-- Campo de nome completo -->
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" id="nome" placeholder="Ex: Ana Silva" oninput="autoSave()"/>
+      </div>
+      <!-- Linha com dois campos lado a lado: cargo e cidade -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cargo / Título</label>
+          <input type="text" id="cargo" placeholder="Ex: Desenvolvedora Front-end" oninput="autoSave()"/>
+        </div>
+        <div class="form-group">
+          <label>Cidade / Estado</label>
+          <input type="text" id="cidade" placeholder="Ex: Brasília, DF" oninput="autoSave()"/>
+        </div>
+      </div>
+      <!-- Linha com e-mail e telefone -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="email" placeholder="ana@email.com" oninput="autoSave()"/>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" id="tel" placeholder="(61) 9 0000-0000" oninput="autoSave()"/>
+        </div>
+      </div>
+      <!-- Linha com LinkedIn e GitHub -->
+      <div class="form-row">
+        <div class="form-group">
+          <label>LinkedIn</label>
+          <input type="text" id="linkedin" placeholder="linkedin.com/in/ana" oninput="autoSave()"/>
+        </div>
+        <div class="form-group">
+          <label>GitHub</label>
+          <input type="text" id="github" placeholder="github.com/ana" oninput="autoSave()"/>
+        </div>
+      </div>
+      <!-- Área de texto para o resumo profissional -->
+      <div class="form-group">
+        <label>Resumo profissional</label>
+        <textarea id="resumo" rows="4" placeholder="Uma breve descrição sobre você, sua experiência e objetivos profissionais..." oninput="autoSave()"></textarea>
+      </div>
+      <!-- Botão para avançar para a próxima seção -->
+      <div class="nav-btns"><button class="btn-next" onclick="goSection(1)">Próximo →</button></div>
+    </div>
+
+    <!-- SEÇÃO 1: EXPERIÊNCIA PROFISSIONAL -->
+    <div class="form-section" id="sec-1">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <div class="section-title">Experiência profissional</div>
+          <div class="section-sub">Adicione suas experiências mais relevantes</div>
+        </div>
+      </div>
+      <!-- Lista de cards de experiência criados dinamicamente pelo JavaScript -->
+      <div id="expList"></div>
+      <!-- Botão que chama a função addExp() para adicionar um novo card -->
+      <button class="btn-add-item" onclick="addExp()">+ Adicionar experiência</button>
+      <!-- Botões de navegação: voltar e próximo -->
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goSection(0)">← Voltar</button>
+        <button class="btn-next" onclick="goSection(2)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 2: FORMAÇÃO ACADÊMICA -->
+    <div class="form-section" id="sec-2">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div>
+          <div class="section-title">Formação acadêmica</div>
+          <div class="section-sub">Cursos, graduação e pós-graduação</div>
+        </div>
+      </div>
+      <!-- Lista de cards de formação criados dinamicamente -->
+      <div id="eduList"></div>
+      <button class="btn-add-item" onclick="addEdu()">+ Adicionar formação</button>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goSection(1)">← Voltar</button>
+        <button class="btn-next" onclick="goSection(3)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 3: HABILIDADES (SKILLS) -->
+    <div class="form-section" id="sec-3">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div>
+          <div class="section-title">Habilidades</div>
+          <div class="section-sub">Tecnicas e comportamentais</div>
+        </div>
+      </div>
+      <!-- Campo para skills técnicas separadas por vírgula -->
+      <div class="form-group">
+        <label>Habilidades técnicas <span class="label-hint">separadas por vírgula</span></label>
+        <input type="text" id="skillsTec" placeholder="HTML, CSS, JavaScript, React, Git..." oninput="autoSave()"/>
+      </div>
+      <!-- Campo para soft skills separadas por vírgula -->
+      <div class="form-group">
+        <label>Habilidades comportamentais <span class="label-hint">separadas por vírgula</span></label>
+        <input type="text" id="skillsSoft" placeholder="Trabalho em equipe, Comunicação, Proatividade..." oninput="autoSave()"/>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goSection(2)">← Voltar</button>
+        <button class="btn-next" onclick="goSection(4)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 4: IDIOMAS -->
+    <div class="form-section" id="sec-4">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div>
+          <div class="section-title">Idiomas</div>
+          <div class="section-sub">Adicione os idiomas que você domina</div>
+        </div>
+      </div>
+      <!-- Lista de cards de idioma criados dinamicamente -->
+      <div id="idiList"></div>
+      <button class="btn-add-item" onclick="addIdi()">+ Adicionar idioma</button>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goSection(3)">← Voltar</button>
+        <button class="btn-next" onclick="goSection(5)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 5: PROJETOS -->
+    <div class="form-section" id="sec-5">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div>
+          <div class="section-title">Projetos</div>
+          <div class="section-sub">Portfolio e projetos pessoais</div>
+        </div>
+      </div>
+      <!-- Lista de cards de projeto criados dinamicamente -->
+      <div id="projList"></div>
+      <button class="btn-add-item" onclick="addProj()">+ Adicionar projeto</button>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goSection(4)">← Voltar</button>
+        <button class="btn-next" onclick="goSection(6)">Próximo →</button>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 6: ESCOLHA DE TEMPLATE -->
+    <div class="form-section" id="sec-6">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <div>
+          <div class="section-title">Escolha o template</div>
+          <div class="section-sub">Selecione o visual do seu currículo</div>
+        </div>
+      </div>
+      <!-- Grade com os três cards de template para o usuário escolher -->
+      <div class="template-grid">
+
+        <!-- Card do template Moderno (sidebar roxa + conteúdo ao lado) -->
+        <label class="template-card" onclick="selectTemplate('moderno')">
+          <!-- Radio button escondido, controlado pelo JavaScript -->
+          <input type="radio" name="template" value="moderno" checked/>
+          <!-- Preview visual do template com mini-representação do layout -->
+          <div class="tpl-preview tpl-moderno">
+            <div class="tpl-sidebar"></div>
+            <div class="tpl-body">
+              <div class="tpl-bar tpl-bar-l"></div>
+              <div class="tpl-bar tpl-bar-m"></div>
+              <div class="tpl-bar tpl-bar-s"></div>
+              <div class="tpl-bar tpl-bar-m" style="margin-top:6px"></div>
+              <div class="tpl-bar tpl-bar-s"></div>
+            </div>
+          </div>
+          <div class="tpl-name">Moderno</div>
+          <div class="tpl-desc">Sidebar colorida, visual impactante</div>
+        </label>
+
+        <!-- Card do template Minimalista (preto e branco, clean) -->
+        <label class="template-card" onclick="selectTemplate('minimalista')">
+          <input type="radio" name="template" value="minimalista"/>
+          <div class="tpl-preview tpl-minimalista">
+            <div class="tpl-min-header">
+              <div class="tpl-bar" style="width:50%;height:5px;background:#111;border-radius:2px;margin-bottom:3px"></div>
+              <div class="tpl-bar" style="width:30%;height:2.5px;background:#bbb;border-radius:1px"></div>
+            </div>
+            <div style="height:1px;background:#111;margin:6px 0"></div>
+            <div class="tpl-bar tpl-bar-s" style="background:#555"></div>
+            <div class="tpl-bar tpl-bar-m" style="background:#888;margin-top:3px"></div>
+            <div class="tpl-bar tpl-bar-s" style="background:#aaa;margin-top:2px"></div>
+          </div>
+          <div class="tpl-name">Minimalista</div>
+          <div class="tpl-desc">Clean, preto e branco, elegante</div>
+        </label>
+
+        <!-- Card do template Criativo (header com gradiente roxo/rosa) -->
+        <label class="template-card" onclick="selectTemplate('criativo')">
+          <input type="radio" name="template" value="criativo"/>
+          <div class="tpl-preview tpl-criativo">
+            <div class="tpl-cr-header"></div>
+            <div class="tpl-body" style="padding:6px">
+              <div class="tpl-bar" style="width:55%;height:3px;background:#7c6af7;border-radius:1px;margin-bottom:3px"></div>
+              <div class="tpl-bar tpl-bar-m" style="background:#999;height:2px"></div>
+              <div class="tpl-bar tpl-bar-s" style="background:#bbb;height:2px;margin-top:2px"></div>
+              <div class="tpl-badge"></div>
+            </div>
+          </div>
+          <div class="tpl-name">Criativo</div>
+          <div class="tpl-desc">Header em gradiente, arrojado</div>
+        </label>
+
+      </div>
+      <!-- Botões de navegação: voltar e o botão principal de gerar o currículo -->
+      <div class="nav-btns" style="margin-top:24px">
+        <button class="btn-back" onclick="goSection(5)">← Voltar</button>
+        <!-- Botão que dispara a geração do currículo com os dados preenchidos -->
+        <button class="btn-generate" onclick="generateCV()">Gerar currículo</button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- Área principal direita onde o currículo gerado é exibido -->
+  <main class="main-area">
+    <!-- Tela de boas-vindas exibida antes de gerar o currículo -->
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-icon">📄</div>
+      <div class="welcome-title">Seu currículo aparece aqui</div>
+      <div class="welcome-sub">Preencha as seções ao lado e clique em <strong>Gerar currículo</strong> para visualizar e exportar em PDF.</div>
+      <!-- Passos indicando como usar a aplicação -->
+      <div class="welcome-steps">
+        <div class="step"><span class="step-n">1</span>Preencha seus dados</div>
+        <div class="step-arrow">→</div>
+        <div class="step"><span class="step-n">2</span>Escolha um template</div>
+        <div class="step-arrow">→</div>
+        <div class="step"><span class="step-n">3</span>Exporte em PDF</div>
+      </div>
+    </div>
+    <!-- Área de preview do currículo gerado, começa escondida -->
+    <div class="cv-preview-wrap" id="cvPreviewWrap" style="display:none">
+      <!-- Botões de ação: exportar PDF e voltar para edição -->
+      <div class="preview-actions">
+        <button class="btn-pdf" onclick="exportPDF()">⬇ Exportar PDF</button>
+        <button class="btn-edit" onclick="backToEdit()">✏️ Editar</button>
+      </div>
+      <!-- Container que aplica escala e sombra ao currículo -->
+      <div class="cv-scale-wrap">
+        <!-- Div onde o HTML do currículo gerado é inserido pelo JavaScript -->
+        <div id="cvOutput"></div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- Elemento do toast (notificação flutuante) controlado pelo JavaScript -->
+<div class="toast" id="toast"></div>
+
+<!-- Importa o arquivo JavaScript com toda a lógica da aplicação -->
+<script src="script.js"></script>
+</body>
+</html>
